@@ -1,12 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import ErrorMessage from "../components/ErrorMessage";
 
 
 export default function RegisterView() {
+    const initalValues = {
+       name: '',
+       email: '',
+       handle: '',
+       password: '',
+       password_confirmation:''
 
-    const { register, watch, handleSubmit, formState: {errors } } = useForm()// extrae las funciones dentro del useForm
+
+    }
+
+    const { register, handleSubmit, formState: {errors } } = useForm({defaultValues : initalValues})// extrae las funciones dentro del useForm
     
     console.log(errors)
 
@@ -50,6 +59,8 @@ export default function RegisterView() {
                                 required: "El email es obligatorio"
                             })}
                         />
+                        {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>} 
+
                     </div>
                     <div className="grid grid-cols-1 space-y-3">
                         <label htmlFor="handle" className="text-2xl text-slate-500">Handle</label>
@@ -62,6 +73,8 @@ export default function RegisterView() {
                                 required: "El handle es obligatorio"
                             })}
                         />
+                          {errors.handle && <ErrorMessage>{errors.handle.message}</ErrorMessage>} 
+
                     </div>
                     <div className="grid grid-cols-1 space-y-3">
                         <label htmlFor="password" className="text-2xl text-slate-500">Password</label>
@@ -74,19 +87,23 @@ export default function RegisterView() {
                                 required: "El password es obligatorio"
                             })}
                         />
+                      {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>} 
+
                     </div>
 
                     <div className="grid grid-cols-1 space-y-3">
                         <label htmlFor="password_confirmation" className="text-2xl text-slate-500">Repetir Password</label>
                         <input
-                            id="password-confirmation"
+                            id="password_confirmation"
                             type="password"
                             placeholder="Repetir Password"
                             className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400"
-                            {...register("password-confirmation", {
-                                required: "El password-confirmation es obligatorio"
+                            {...register("password_confirmation", {
+                                required: "Confirmar el password es obligatorio"
                             })}
                         />
+                         {errors.password_confirmation && <ErrorMessage>{errors.password_confirmation.message}</ErrorMessage>} 
+
                     </div>
 
                     <input
