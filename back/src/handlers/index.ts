@@ -5,6 +5,7 @@ import User from "../models/Users"
 import { Request, Response } from "express"
 import { CheckPassword, hashPassword } from "../utils/auth"
 import { validationResult } from "express-validator"
+import { generateJWT } from "../utils/jwt"
 
 
 //pondremos funciones que se llamaran a nuestas rutas 
@@ -49,10 +50,11 @@ export const login = async (req: Request , res: Response ) : Promise<any> =>{
     if (!errors.isEmpty()) {
         return res.status(400).json({errors : errors.array()})
     }
+    
     //revisar si el usuario existe
     const user = await User.findOne({email})// se traera la primer coincidencia 
     if (!user) {
-        const error = new Error('Usuario no existe')
+        const error = new Error('El Usuario no existe')
         return res.status(404).json({error : error.message})
     }
 
@@ -64,7 +66,10 @@ export const login = async (req: Request , res: Response ) : Promise<any> =>{
         const error = new Error('Pasword incorrecto')
         return res.status(401).json({error : error.message})
     }
-    res.send('Autenticado...')
+
+    const token = generateJWT({id:user.id})
+    
+    res.send('Autentificado...')
 }
   
 
