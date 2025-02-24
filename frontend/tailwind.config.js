@@ -7,6 +7,8 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms')// para que jale la dependencia
+  ],
 }
 
