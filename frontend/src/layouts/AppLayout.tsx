@@ -5,6 +5,7 @@ import NavigationTabs from "../components/NavigationTabs";
 export default function AppLayout() {
 
 
+    
     return (
         <>
             <header className="bg-slate-800 py-5">
