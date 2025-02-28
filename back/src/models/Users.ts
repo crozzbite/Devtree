@@ -6,6 +6,7 @@ export interface IUser {
     email: string
     password : string
     handle: string
+    description: string
 }
 
 // la interface tiene que ser un reflejo de el schema
@@ -42,6 +43,10 @@ const userSchema = new Schema({
         unique: true,//wacha que sea el unico 
 
     },
+    description:{
+        type: String,
+        default: '',
+    }
 })
 
 const User = mongoose.model<IUser>('User', userSchema)

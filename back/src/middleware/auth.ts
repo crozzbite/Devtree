@@ -13,17 +13,13 @@ declare global{
 export const authenticate = async (req, res, next) => {
     const bearer = req.headers.authorization;
 
-    if (!bearer) {
+    if (!bearer || bearer === 'Bearer') {
       const error = new Error("No Autorizado");
       return res.status(401).json({ error: error.message });
     }
   
-    const [, token] = bearer.split("");
+    const [, token] = bearer.split(" ");
   
-    if (!token) {
-      const error = new Error("No Autorizado");
-      return res.status(401).json({ error: error.message });
-    }
   
     try {
       const result = jwt.verify(token, process.env.JWT_SECRET);

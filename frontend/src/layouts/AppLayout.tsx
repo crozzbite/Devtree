@@ -14,11 +14,6 @@ const {data, isLoading, isError} = useQuery({
 }) 
 
 if (isLoading) return 'Cargando...'
-if(isError) {
-    return <Navigate to={'/auth/login'}/>
-    
-}
-
-    
-    if(data) return <DevTree data={data} /> // renderisa el componente del nombre puesto 
+if(isError)return <Navigate to={'/auth/login'}/>
+if(data) return <DevTree data={data} /> // renderisa el componente del nombre puesto 
 }
