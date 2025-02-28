@@ -1,7 +1,7 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 //schema son como las interfaces en angular 
 
-export interface IUser {
+export interface IUser extends Document { // extend document es para que tenga los metodos de mongo DB
     name : string
     email: string
     password : string
