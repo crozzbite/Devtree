@@ -50,7 +50,7 @@ router.patch('/user',
     updateProfile)// path, handle autentification, handle information
 //usamos el mismo patch por simplicidad pero deveriamos normmente poner otro nombre
 
- router.post('user/image', authenticate, uploadImage)
+ router.post('/user/image', authenticate, uploadImage)
 export default router
 
 

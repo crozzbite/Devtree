@@ -107,8 +107,7 @@ export const uploadImage = async (req: Request, res: Response):Promise<any> => {
 
   try {
     form.parse(req, (error, fields, files) => {
-      cloudinary.uploader.upload(files.file[0].filepath,{ public_id: uuid()},
-        async function (error, result) {
+      cloudinary.uploader.upload(files.file[0].filepath,{ public_id: uuid()},async function (error, result) {
           if (error) {
             const error = new Error("Hubo un error al subir tu imagen");
             return res.status(500).json({ error: error.message });
