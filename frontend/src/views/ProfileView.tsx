@@ -1,27 +1,38 @@
 import { useForm } from "react-hook-form"
 import ErrorMessage from "../components/ErrorMessage"
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { ProfileForm, User } from "../types";
+import { updateProfile } from "../api/DevTreeAPI";
 
 
 
 
 export default function ProfileView() {
 
-    const quertyClient = useQueryClient()
-    const data: User = quertyClient.getQueryData(['user'])! 
+    const queryClient = useQueryClient()
+    const data: User = queryClient.getQueryData(['user'])! 
     // el signo ! al final sifnifica quiere decir que garantisamos que estara ahy User
     console.log(data)
 
   
-     const {register, handleSubmit, formState: {errors}} = useForm<ProfileForm>({ defaultValues: { //este es como un constructor 
-        handle : data?.handle,
-        description: data?.description
+     const {register, handleSubmit, formState: {errors}} = useForm<ProfileForm>({
+        defaultValues: { //este es como un constructor 
+        handle : data.handle,
+        description: data.description
      }})
 
+     const updateProfileMutation = useMutation({
+        mutationFn: updateProfile,
+        onError: () =>{
+            console.log('hubo un error')
+        },
+        onSuccess : () =>{
+            console.log('todo bn')
+        }
+     })
+
      const handleUserProfileForm = (formData : ProfileForm ) =>{
-        return formData
-        
+        updateProfileMutation.mutate(formData)
      }
 
      
@@ -63,12 +74,12 @@ export default function ProfileView() {
 
             <div className="grid grid-cols-1 gap-2">
                 <label
-                    htmlFor="handle"
+                    htmlFor="image"
                 >Imagen:</label>
                 <input
                     id="image"
                     type="file"
-                    name="handle"
+                    name="image"
                     className="border-none bg-slate-100 rounded-lg p-2"
                     accept="image/*"
                     onChange={ () => {} }

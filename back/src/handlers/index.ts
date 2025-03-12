@@ -73,14 +73,14 @@ export const getUser = async (req: Request, res: Response):Promise<any> => {
   res.json(req.user)
 };
 
-export const updataProfile = async (req: Request, res: Response):Promise<any> => {
+export const updateProfile = async (req: Request, res: Response):Promise<any> => {
 try {
   // check de que el handle no esta ocupado ya
   const {description} = req.body
 
   const handle = slugify(req.body.handle, { lower: true, replacement: "" });
   const handleExist = await User.findOne({ handle });
-  if (handleExist && handleExist.email !== req.user.email) {// que el usuario.email de la peticion es diferente al que hace la peticion 
+  if (handleExist && handleExist.email !== req.user.email) {
     const error = new Error("nombre de usuario no disponible");
     return res.status(409).json({ error: error.message });
   }
@@ -88,7 +88,7 @@ try {
   // actualizar el usuario
   req.user.description = description
   req.user.handle = handle
-  await req.user.save()//metodo de mongo DB para guardar 
+  await req.user.save()//metodo de mongoose para guardar
   res.send('Perfil Actualizado Correctamente')
 } catch (e) {
   const error = new Error('Hubo un error actualizando tu perfil')
