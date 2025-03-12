@@ -3,6 +3,7 @@ import ErrorMessage from "../components/ErrorMessage"
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { ProfileForm, User } from "../types";
 import { updateProfile } from "../api/DevTreeAPI";
+import { toast } from "sonner";
 
 
 
@@ -12,7 +13,6 @@ export default function ProfileView() {
     const queryClient = useQueryClient()
     const data: User = queryClient.getQueryData(['user'])! 
     // el signo ! al final sifnifica quiere decir que garantisamos que estara ahy User
-    console.log(data)
 
   
      const {register, handleSubmit, formState: {errors}} = useForm<ProfileForm>({
@@ -23,11 +23,13 @@ export default function ProfileView() {
 
      const updateProfileMutation = useMutation({
         mutationFn: updateProfile,
-        onError: () =>{
-            console.log('hubo un error')
+        onError: (error) =>{
+            toast.error(error.message)
         },
-        onSuccess : () =>{
-            console.log('todo bn')
+        onSuccess : (data) =>{
+            toast.success(data)   
+            //este queryClient.invalidateQueries es para actualizar el estado de la app y asi actualizar la informacion que ya no esta actualizada
+            queryClient.invalidateQueries({queryKey: ['user']})
         }
      })
 

@@ -7,6 +7,7 @@ export interface IUser extends Document { // extend document es para que tenga l
     password : string
     handle: string
     description: string
+    image: string
 }
 
 // la interface tiene que ser un reflejo de el schema
@@ -46,6 +47,10 @@ const userSchema = new Schema({
     description:{
         type: String,
         default: '',
+    },
+    image:{
+        type: String,
+        default: ''
     }
 })
 

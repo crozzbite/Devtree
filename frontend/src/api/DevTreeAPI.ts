@@ -22,11 +22,7 @@ export async function getUser() {
 
 export async function updateProfile(formData: ProfileForm) {
     try {
-      const { data } = await api.patch<string>('/user', formData,{
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-      });
+      const { data } = await api.patch<string>('/user', formData);
       return data
     } catch (error) {
       if (isAxiosError(error) && error.message) {
