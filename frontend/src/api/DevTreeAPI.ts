@@ -36,7 +36,7 @@ export async function updateProfile(formData: ProfileForm) {
     formData.append('file', file);
     try {
       const { data } = await api.post<string>('/user/image', formData)
-      return data
+      return data.toString(); // aqui hacemos el dato string por que si no falla al hacer el Render
 
     } catch (error) {
       if (isAxiosError(error) && error.message) {

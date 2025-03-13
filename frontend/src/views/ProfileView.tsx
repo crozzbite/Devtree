@@ -38,15 +38,15 @@ export default function ProfileView() {
         onError: (error) => {
             toast.error(error.message)
         },
-        onSuccess : (data) => {
-            toast.success(data)   
-
+        onSuccess : () => {
+            queryClient.invalidateQueries({queryKey: ['user']})
+            toast.success('Imagen Actualizada')   
         }
      })
 
-     const handleImageChange = (e : React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            updateProfileImageMutation.mutate(e.target.files[0])
+     const handleImageChange = async (e : React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            await updateProfileImageMutation.mutate(e.target.files[0])
         }
       }
      const handleUserProfileForm = (formData : ProfileForm ) =>{
