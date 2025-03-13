@@ -20,5 +20,13 @@ export type LoginForm = Pick<User, 'email' > & {
 
 export type ProfileForm = Pick<User, 'handle'  | 'description'> & { 
     //en este type pondre la casa de la app de yasuo
-    // profile_Photo: ImageData
 }
+
+export type SocialNetwork= {
+    id: number,
+    name: string,
+    url: string,
+    enabled: boolean
+}
+
+export type DevTreeLink = Pick<SocialNetwork, 'name' | 'url' | 'enabled'> 
