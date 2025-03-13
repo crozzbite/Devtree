@@ -31,6 +31,20 @@ export async function updateProfile(formData: ProfileForm) {
     }
   }
 
+  // export async function uploadImage(file: File) {
+  //   const formData = new FormData();
+  //   formData.append('file', file);
+  //   try {
+  //     const { data: {image} }: {data: {image: string}} = await api.post('/user/image', formData)
+  //     return image // aqui hacemos el dato string por que si no falla al hacer el Render
+
+  //   } catch (error) {
+  //     if (isAxiosError(error) && error.message) {
+  //       throw new Error(error.response?.data.error);
+  //     }
+  //   }
+  // }
+
   export async function uploadImage(file: File) {
     const formData = new FormData();
     formData.append('file', file);

@@ -40,7 +40,10 @@ export default function ProfileView() {
         },
         onSuccess : () => {
             queryClient.invalidateQueries({queryKey: ['user']})
-            toast.success('Imagen Actualizada')   
+            toast.success('Imagen Actualizada') 
+            // queryClient.setQueryData(['user'], (oldData : User) => {
+            //     return{...oldData, image: data}
+            // })  
         }
      })
 
