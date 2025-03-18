@@ -82,7 +82,7 @@ export const updateProfile = async (
 ): Promise<any> => {
   try {
     // check de que el handle no esta ocupado ya
-    const { description } = req.body;
+    const { description, links } = req.body;
 
     const handle = slugify(req.body.handle, { lower: true, replacement: "" });
     const handleExist = await User.findOne({ handle });
@@ -94,6 +94,7 @@ export const updateProfile = async (
     // actualizar el usuario
     req.user.description = description;
     req.user.handle = handle;
+    req.user.links = links;
     await req.user.save(); //metodo de mongoose para guardar
     res.send("Perfil Actualizado Correctamente");
   } catch (e) {

@@ -53,7 +53,13 @@ export default function ProfileView() {
         }
       }
      const handleUserProfileForm = (formData : ProfileForm ) =>{
-        updateProfileMutation.mutate(formData)
+        // este querty client es para obtener la informacion de el usuario
+        //manejar el estado de la app, para que no se tenga que hacer un fetch
+        // cada vez que se quiera obtener la informacion de el usuario sirve para cachear la informacion de el usuario 
+        const user = queryClient.getQueryData<User>(['user'])!
+        user.description = formData.description
+        user.handle = formData.handle        
+        updateProfileMutation.mutate(user)//
      }
 
      
