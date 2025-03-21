@@ -48,3 +48,4 @@ export default tseslint.config({
   },
 })
 ```
+install @dnd-kit/core para usar un darg and drop de  los links y que se puedan re ordenar 

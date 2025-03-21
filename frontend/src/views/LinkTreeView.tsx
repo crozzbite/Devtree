@@ -8,79 +8,133 @@ import { updateProfile } from "../api/DevTreeAPI";
 import { User, SocialNetwork } from "../types";
 
 export default function LinkTreeView() {
-  const [devTeeLinks, setDevTreeLinks] = useState(social);
+  const [devTreeLinks, setDevTreeLinks] = useState(social);
 
-  const quertyClient = useQueryClient();
-  const user: User = quertyClient.getQueryData(['user'])!
+  const queryClient = useQueryClient();
+  const user: User = queryClient.getQueryData(["user"])!;
 
-  const { mutate} = useMutation({
+  const { mutate } = useMutation({
     mutationFn: updateProfile,
     onError: (error) => {
-        toast.error(error.message);
+      toast.error(error.message);
     },
-    onSuccess: () =>{
-        toast.success('Perfil Actualizado')
-    }
-  })
-  
-  useEffect(() => {
-    const updatedData = devTeeLinks.map (item => {
-        const userlink = JSON.parse(user.links).find((link: SocialNetwork) => link.name === item.name)
-        if (userlink) {
-            return {...item, url: userlink.url, enabled: userlink.enabled}
-        }
-        return item
-    })
-    setDevTreeLinks(updatedData)
+    onSuccess: () => {
+      toast.success("Actualizado Correctamente");
+    },
+  });
 
+  useEffect(() => {
+    const updatedData = devTreeLinks.map((item) => {
+      const userlink = JSON.parse(user.links).find(
+        (link: SocialNetwork) => link.name === item.name
+      );
+      if (userlink) {
+        return { ...item, url: userlink.url, enabled: userlink.enabled };
+      }
+      return item;
+    });
+    setDevTreeLinks(updatedData);
   }, []);
 
-  // agarraremos props y las pasaremos hacia el hijo
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const updatedLinks = devTeeLinks.map((link) =>
-      link.name === e.target.name ? { ...link, url: e.target.value } : link);
-    setDevTreeLinks(updatedLinks);// guarda los datos de nuestro estado
+    const updatedLinks = devTreeLinks.map((link) =>
+      link.name === e.target.name ? { ...link, url: e.target.value } : link
+    );
+    setDevTreeLinks(updatedLinks);
+  };
 
-    quertyClient.setQueryData (['user'], (oldData: User) => {
-        return {...oldData, links: JSON.stringify(updatedLinks)} // el json para que los datos se guarden como string
-      })
-    };
-  
+  const links: SocialNetwork[] = JSON.parse(user.links);
 
-  const handleEnableLink = (SocialNetwork: string) => {
-    // cambiar el estado de enabled
-    const updatedLinks = devTeeLinks.map(link => {
-      if (link.name === SocialNetwork) {
+  const handleEnableLink = (socialNetwork: string) => {
+    const updatedLinks = devTreeLinks.map((link) => {
+      if (link.name === socialNetwork) {
         if (isValidUrl(link.url)) {
           return { ...link, enabled: !link.enabled };
         } else {
-          toast.error("URL no valida");
+          toast.error("URL no Válida");
         }
       }
       return link;
-    })
+    });
+
     setDevTreeLinks(updatedLinks);
 
-    quertyClient.setQueryData (['user'], (oldData: User) => {
-      return {...oldData, links: JSON.stringify(updatedLinks)} // el json para que los datos se guarden como string
+    let updatedItems: SocialNetwork[] = [];
+    const selectedSocialNetwork = updatedLinks.find(
+      (link) => link.name === socialNetwork
+    );
+    if (selectedSocialNetwork?.enabled) {
+      const id = links.filter((link) => link.id).length + 1;
+      if (links.some((link) => link.name === socialNetwork)) {
+        console.log("ya exisssste");
+        updatedItems = links.map((link) => {
+          if (link.name === socialNetwork) {
+            return {
+              ...link,
+              enabled: true,
+              id,
+            };
+          } else {
+            return link;
+          }
+        });
+      } else {
+        const newItem = {
+          ...selectedSocialNetwork,
+          id,
+        };
+        updatedItems = [...links, newItem];
+      }
+    } else {
+      const indexToUpdate = links.findIndex(
+        (link) => link.name === socialNetwork
+      );
+      updatedItems = links.map((link) => {
+        if (link.name === socialNetwork) {
+          return {
+            ...link,
+            id: 0,
+            enabled: false,
+          };
+        } else if (link.id > indexToUpdate && (indexToUpdate !== 0 &&  link.id === 1)) {
+          return {
+            ...link,
+            id: link.id - 1,
+          };
+        } else {
+          return link;
+        }
+      });
+    }
+    console.log(updatedItems);
+
+    // Almacenar en la base de datos
+    queryClient.setQueryData(["user"], (prevData: User) => {
+      return {
+        ...prevData,
+        links: JSON.stringify(updatedItems),
+      }
     })
-  };
+  }
+
   return (
     <>
-    <div className="space-y-5">
-      {devTeeLinks.map((item) => (
-        <DevTreeInput
-          key={item.name}
-          item={item}
-          handleUrlChange={handleUrlChange}
-          handleEnableLink={handleEnableLink}
-        />
-      ))}
-      <button
-      className="bg-cyan-400 p-2 text-lg w-full uppercase text-slate-600 rounded front-bold"
-      onClick={() => mutate(user)}
-      >Guardar Cambios</button>
-    </div>
+      <div className="space-y-5">
+        {devTreeLinks.map((item) => (
+          <DevTreeInput
+            key={item.name}
+            item={item}
+            handleUrlChange={handleUrlChange}
+            handleEnableLink={handleEnableLink}
+          />
+        ))}
+        <button
+          className="bg-cyan-400 p-2 text-lg w-full uppercase text-slate-600 rounded-lg font-bold"
+          onClick={() => mutate(queryClient.getQueryData(["user"])!)}
+        >
+          Guardar Cambios
+        </button>
+      </div>
     </>
   );
 }
