@@ -75,11 +75,11 @@ if (over && over.id) { // todo para re ordenar los links con el drag and drop
           <div className="flex justify-end">
             <Link
               className="font-bold text-right text-slate-800 text-2xl"
-              to={""}
+              to={`/${data.handle}`}
               target="_blank"
               rel="noreferrer noopener"
             >
-              Visitar Mi Perfil: {data.name}
+              Visitar Mi Perfil: {data.handle}
             </Link>
           </div>
 

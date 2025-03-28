@@ -13,6 +13,8 @@ If you are developing a production application, we recommend updating the config
 
 - Configure the top-level `parserOptions` property like this:
 
+rfc + tab = genera el componente en el file 
+
 ```js
 export default tseslint.config({
   languageOptions: {
