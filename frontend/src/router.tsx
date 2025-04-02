@@ -6,7 +6,8 @@ import AuthLayout from "./layouts/AuthLayout";
 import AppLayout from "./layouts/AppLayout";
 import LinkTreeView from "./views/LinkTreeView";
 import ProfileView from "./views/ProfileView";
-import HandleView from "./views/ProfileView";
+import HandleView from "./views/HandleView";
+import NotFoundView from "./views/NotFoundView";
 
 
 // Archivo router.tsx
@@ -25,6 +26,10 @@ const AppRouter: React.FC = () => {
                 </Route>
                 <Route path='/:handle' element={<AuthLayout />}>
                     <Route element={<HandleView />} index={true} />
+                </Route>
+               
+                <Route path='/404' element={<AuthLayout />}>
+                    <Route element={<NotFoundView />} index={true} />
                 </Route>
             </Routes>
         </BrowserRouter>

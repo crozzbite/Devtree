@@ -129,3 +129,18 @@ export const uploadImage = async (req: Request, res: Response):Promise<any> => {
   }
 }
 
+export const getUserByHandle = async (req: Request, res: Response):Promise<any> => {
+  try {
+    const { handle } = req.params;
+    console.log(handle);
+    const user = await User.findOne({ handle }).select('-_id -__v -_email -password') // es una consulta a DB para saber si el handle existe
+    if(!user){
+      const error = new Error("El usuario no existe");
+      return res.status(404).json({ error: error.message });
+    }
+    res.json(user) // genera la respuesta de la DB 
+  } catch (e) {
+    const error = new Error("Hubo un error actualizando tu perfil");
+    return res.status(500).json({ error: error.message });
+  }
+}

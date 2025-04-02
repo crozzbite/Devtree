@@ -1,6 +1,6 @@
 import { isAxiosError } from "axios";
 import api from "../config/axios";
-import {  User } from "../types";
+import {  User, Userhandle } from "../types";
 
 const token = localStorage.getItem("AUTH_TOKEN");
 
@@ -52,6 +52,18 @@ export async function updateProfile(formData: User) {
       const { data } = await api.post<string>('/user/image', formData)
       return data.toString(); // aqui hacemos el dato string por que si no falla al hacer el Render
 
+    } catch (error) {
+      if (isAxiosError(error) && error.message) {
+        throw new Error(error.response?.data.error);
+      }
+    }
+  }
+
+  export async function getUserByHandle(handle: string) {
+    try {
+      const url = `/${handle}`
+      const { data } = await api<Userhandle>(url);
+      return data
     } catch (error) {
       if (isAxiosError(error) && error.message) {
         throw new Error(error.response?.data.error);
