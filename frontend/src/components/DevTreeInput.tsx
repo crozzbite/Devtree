@@ -12,7 +12,7 @@ export default function DevTreeInput({ item , handleUrlChange, handleEnableLink 
     <div className="bg-white shadow-sm p-5 flex items-center gap-3">
       <div className="w-12 h-12 bg-cover">
         <img
-          src={`../../public/Materiales DevTree/social/icon_${item.name}.svg`}
+          src={`/Materiales DevTree/social/icon_${item.name}.svg`}
           alt={`${item.name}`}
         />
       </div>

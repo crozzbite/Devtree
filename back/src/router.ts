@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { body } from "express-validator";
-import { createAccount, getUser, getUserByHandle, login, updateProfile, uploadImage } from "./handlers";
+import { createAccount, getUser, getUserByHandle, login, searchByHandle, updateProfile, uploadImage } from "./handlers";
 import { handleInputErrors } from "./middleware/validations";
 import { authenticate } from "./middleware/auth";
 
@@ -42,21 +42,23 @@ router.patch('/user',
     body('handle')
     .notEmpty()
     .withMessage('Nombre de handle no puede ir vacio'),
-    body('description')
-    .notEmpty()
-    .withMessage('La descripcion no puede ir vacia'),
     handleInputErrors,
     authenticate,
     updateProfile)// path, handle autentification, handle information
 //usamos el mismo patch por simplicidad pero deveriamos normmente poner otro nombre
 
  router.post('/user/image', authenticate, uploadImage)
-export default router
 
 router.get('/:handle', getUserByHandle)
 
+router.post('/search', 
+    body('handle')
+    .notEmpty()
+    .withMessage('el Handle no puede ir vacio'),
+    handleInputErrors,
+    searchByHandle)
 
-
+export default router
 
 /**
 //Routing

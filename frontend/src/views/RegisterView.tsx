@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form"
 import {isAxiosError} from "axios";
 import { toast } from "sonner";
@@ -8,10 +8,12 @@ import api from "../config/axios";
 
 
 export default function RegisterView() {
+    const location = useLocation()
+    const navigate = useNavigate() 
     const initalValues : RegisterForm = {
        name: '',
        email: '',
-       handle: '',
+       handle: location?.state?.handle || '',// ponemos opcional por que si no solo manda undefined y no renderisa
        password: '',
        password_confirmation:''
     }
@@ -25,6 +27,7 @@ export default function RegisterView() {
             const {data} = await api.post(`/auth/register`,formData)
             toast.success(data)
             reset()
+            navigate('/auth/login')// te lleva al login ya que te registraste para iniciar sesion
         } catch (error) {
             if (isAxiosError(error) && error.response) {
                 toast.error(error.response.data.error)    

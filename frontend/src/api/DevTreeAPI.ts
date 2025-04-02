@@ -3,6 +3,7 @@ import api from "../config/axios";
 import {  User, Userhandle } from "../types";
 
 const token = localStorage.getItem("AUTH_TOKEN");
+// este archivo es el que interactua con nuestro back end 
 
 export async function getUser() {
 
@@ -64,6 +65,17 @@ export async function updateProfile(formData: User) {
       const url = `/${handle}`
       const { data } = await api<Userhandle>(url);
       return data
+    } catch (error) {
+      if (isAxiosError(error) && error.message) {
+        throw new Error(error.response?.data.error);
+      }
+    }
+  }
+
+  export async function searchByHandle(handle: string) {
+    try {
+    const {data} = await api.post<string>('/search', {handle})// toma el handle que mandamos del search
+    return data 
     } catch (error) {
       if (isAxiosError(error) && error.message) {
         throw new Error(error.response?.data.error);

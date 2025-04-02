@@ -25,7 +25,7 @@ export default function DevTreeLinks({ link }: DevTreeLinksProps) {
       >
         <div className="w-12 h-12 bg-cover">
           <img
-            src={`../../public/Materiales DevTree/social/icon_${link.name}.svg`}
+            src={`/Materiales DevTree/social/icon_${link.name}.svg`}
             alt={`${link.name}`}
           />
         </div>
