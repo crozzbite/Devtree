@@ -132,7 +132,6 @@ export const uploadImage = async (req: Request, res: Response):Promise<any> => {
 export const getUserByHandle = async (req: Request, res: Response):Promise<any> => {
   try {
     const { handle } = req.params;
-    console.log(handle);
     const user = await User.findOne({ handle }).select('-_id -__v -_email -password') // es una consulta a DB para saber si el handle existe
     if(!user){
       const error = new Error("El usuario no existe");

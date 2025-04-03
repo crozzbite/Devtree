@@ -66,7 +66,6 @@ export default function LinkTreeView() {
     if (selectedSocialNetwork?.enabled) {
       const id = links.filter((link) => link.id).length + 1;
       if (links.some((link) => link.name === socialNetwork)) {
-        console.log("ya exisssste");
         updatedItems = links.map((link) => {
           if (link.name === socialNetwork) {
             return {
@@ -106,7 +105,6 @@ export default function LinkTreeView() {
         }
       });
     }
-    console.log(updatedItems);
 
     // Almacenar en la base de datos
     queryClient.setQueryData(["user"], (prevData: User) => {
