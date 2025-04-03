@@ -17,7 +17,7 @@ export default function HandleData({data}: HandleDataProps) {
           />
         )}
         <br />
-        <p className="text-gray-800 text-lg text-center">{data.description}</p>
+        <h2 className="text-white text-2xl text-center p-4 rounded-lg">{data.description}</h2>
         <div className="mt-20 flex flex-col gap-6">
             {links.length ? 
             links.map((link) => (
