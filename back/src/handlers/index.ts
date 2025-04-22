@@ -158,4 +158,31 @@ export const searchByHandle = async (req: Request, res: Response): Promise<any> 
     const error = new Error("Hubo un error");
     return res.status(500).json({ error: error.message });
   }
-} 
+}
+
+export const submitQuiz = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const { score } = req.body; // Recibir 'score' directamente
+
+    // Validar que el score esté presente y sea un número válido
+    if (score === undefined || typeof score !== 'number') {
+      const error = new Error("La puntuación es requerida y debe ser un número válido");
+      return res.status(400).json({ error: error.message });
+    }
+
+    // Verificar si el usuario ya tiene un score diferente de 0
+    if (req.user.score !== 0) {
+      const error = new Error("No puedes volver a enviar el quiz");
+      return res.status(403).json({ error: error.message });
+    }
+
+    // Actualizar el usuario con la puntuación
+    req.user.score = score;
+    await req.user.save();
+
+    res.status(200).json({ message: "Quiz completado con éxito", score });
+  } catch (e) {
+    const error = new Error("Hubo un error al procesar el quiz");
+    return res.status(500).json({ error: error.message });
+  }
+};

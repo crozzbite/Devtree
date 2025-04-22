@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 import SearchForm from "../components/SearchForm";
-
+import { Link } from "react-router-dom";
 
 export default function HomeView() {
   return (
@@ -16,6 +16,10 @@ export default function HomeView() {
                     </h1>
 
                     <p className="text-slate-800 text-xl">Únete a más de 200 mil developers compartiendo sus redes sociales, comparte tu perfil de TikTok, Facebook, Instagram, YouTube, Github y más</p>
+
+                    <Link to="/quiz" className="bg-cyan-400 text-white px-6 py-3 rounded-lg font-bold text-lg inline-block mt-6">
+                        Tomar el quiz de casa
+                    </Link>
 
                     <SearchForm />
                 </div>

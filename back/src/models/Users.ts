@@ -9,6 +9,7 @@ export interface IUser extends Document { // extend document es para que tenga l
     description: string
     image: string
     links: string
+    score: number // Puntuación generada en el resultado del quiz
 }
 
 // la interface tiene que ser un reflejo de el schema
@@ -56,6 +57,10 @@ const userSchema = new Schema({
     links:{
         type: String,
         default: '[]'
+    },
+    score:{
+        type: Number,
+        default: 0
     }
 })
 

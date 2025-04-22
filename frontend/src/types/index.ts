@@ -1,4 +1,3 @@
-
 export type User = {
     name : string
     email: string
@@ -8,7 +7,10 @@ export type User = {
     description: string
     image: string
     links : string
+    score: number // Puntuación generada en el resultado del quiz
 }
+
+// hacer nuevo usuario master para que 
 
 export type Userhandle = Pick<User, 'handle'| 'image'| 'description' | 'links'| 'name'> 
 
@@ -33,4 +35,4 @@ export type SocialNetwork= {
     enabled: boolean
 }
 
-export type DevTreeLink = Pick<SocialNetwork, 'name' | 'url' | 'enabled'> 
+export type DevTreeLink = Pick<SocialNetwork, 'name' | 'url' | 'enabled'>

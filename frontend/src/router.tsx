@@ -1,4 +1,3 @@
-
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import LoginView from "./views/LoginView";
 import RegisterView from "./views/RegisterView";
@@ -9,6 +8,7 @@ import ProfileView from "./views/ProfileView";
 import HandleView from "./views/HandleView";
 import NotFoundView from "./views/NotFoundView";
 import HomeView from "./views/HomeView";
+import QuizView from "./views/QuizView";
 
 
 // Archivo router.tsx
@@ -24,6 +24,8 @@ const AppRouter: React.FC = () => {
                 <Route path='/admin' element={<AppLayout />}>
                     <Route index={true} element={<LinkTreeView />} />
                     <Route path='profile' element={<ProfileView />} /> 
+                    <Route path='quizt' element={<QuizView />} />
+
                 </Route>
                 <Route path='/:handle' element={<AuthLayout />}>
                     <Route element={<HandleView />} index={true} />

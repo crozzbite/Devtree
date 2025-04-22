@@ -27,7 +27,7 @@ export default function RegisterView() {
             const {data} = await api.post(`/auth/register`,formData)
             toast.success(data)
             reset()
-            navigate('/auth/login')// te lleva al login ya que te registraste para iniciar sesion
+            navigate('/admin/quizt') // redirige al nuevo path del quiz después de registrarse
         } catch (error) {
             if (isAxiosError(error) && error.response) {
                 toast.error(error.response.data.error)    
