@@ -1,3 +1,10 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Local env files
 .env
-.dist
-node_modules
+.env.* 
