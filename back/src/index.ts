@@ -1,10 +1,10 @@
 import 'colors'
 import server from './server'
 
-const PORT = process.env.PORT || 4000 // variable de sistema  
+const port = process.env.port || 4000 // variable de sistema  
 
-server.listen(PORT, () => {
-    console.log(`servidor funcionando en el puerto ${PORT} `.blue );
+server.listen(port, () => {
+    console.log(`servidor funcionando en el puerto ${port} `.blue );
 })
 //"dev": "node --watch index.js" == dev : nodemon index.js
 
