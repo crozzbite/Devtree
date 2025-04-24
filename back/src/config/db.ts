@@ -7,7 +7,7 @@ export const conectDB = async () => {
     try {
 
         const {connection} = await mongoose.connect(process.env.MONGO_URI);
-        const url = `${connection.host}:${connection.port}`;
+        const url = `${connection.host}:${connection.PORT}`;
 
         console.log(('mongoose conected to:' + url).magenta);
     } catch (error) {
