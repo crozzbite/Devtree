@@ -20,4 +20,18 @@ app.use(cors(corsConfig))
 app.use('/', router)// use es para mapear las rutas de manera correcta 
 // puedes tener varias dependiendo de lo que necesites 
 
+// Middleware de manejo de errores CORS y generales
+app.use((err, req, res, next) => {
+    if (err instanceof Error && err.message.includes('CORS')) {
+      return res.status(403).json({
+        ok: false,
+        message: 'Acceso denegado por política de CORS',
+      });
+    }
+    console.error('🔴 Error no manejado:', err);
+    res.status(500).json({
+      ok: false,
+      message: 'Error interno del servidor',
+    });
+  });
 export default app
