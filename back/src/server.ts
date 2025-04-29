@@ -10,11 +10,13 @@ import { corsConfig } from './config/cors';
 
 const app = express()//significa que aremos una app de express , es la estancia del servidor 
 conectDB()
+
+app.use(cors(corsConfig))
 //leer datos
 app.use(express.json())
 
 //Cors
-app.use(cors(corsConfig))
+
 
 
 app.use('/', router)// use es para mapear las rutas de manera correcta 
